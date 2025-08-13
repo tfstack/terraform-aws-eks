@@ -31,6 +31,7 @@ module "node_groups" {
 - **cluster_endpoint**: string
 - **cluster_ca_certificate**: string
 - **managed_node_groups**: map(object({...})) (default: {})
+  - Supports `ami_type` (optional); defaults to `AL2023_x86_64_STANDARD` if not set
 - **self_managed_node_groups**: map(object({...})) (default: {})
 - **node_group_additional_policies**: map(object({ policy = string })) (default: {})
 - **tags**: map(string) (default: {})
