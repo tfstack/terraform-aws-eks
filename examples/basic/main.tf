@@ -133,6 +133,7 @@ module "eks" {
       max_size       = 5
       min_size       = 1
       instance_types = ["t3.medium"]
+      ami_type       = "AL2023_x86_64_STANDARD"
       labels = {
         "node.kubernetes.io/role"          = "worker"
         "node.kubernetes.io/instance-type" = "t3.medium"
@@ -147,6 +148,7 @@ module "eks" {
       max_size       = 3
       min_size       = 0
       instance_types = ["t3.medium", "t3.small"]
+      ami_type       = "AL2023_x86_64_STANDARD"
       labels = {
         "node.kubernetes.io/role"          = "worker"
         "node.kubernetes.io/instance-type" = "spot"

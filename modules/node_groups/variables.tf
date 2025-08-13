@@ -27,6 +27,7 @@ variable "managed_node_groups" {
     max_size       = number
     min_size       = number
     instance_types = list(string)
+    ami_type       = optional(string)
     remote_access = optional(object({
       ec2_ssh_key               = string
       source_security_group_ids = list(string)

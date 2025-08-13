@@ -18,6 +18,7 @@ resource "aws_eks_node_group" "managed" {
   }
 
   instance_types = each.value.instance_types
+  ami_type       = coalesce(try(each.value.ami_type, null), "AL2023_x86_64_STANDARD")
 
   dynamic "remote_access" {
     for_each = each.value.remote_access != null ? [each.value.remote_access] : []
