@@ -20,6 +20,7 @@ The example:
 
 - Creates a VPC (via `cloudbuildlab/vpc/aws`)
 - Creates an EKS cluster using the root module in this repository
+- Enables cluster encryption with KMS (automatically creates and configures KMS key)
 - Enables CoreDNS, kube-proxy, VPC CNI, EBS CSI, EFS CSI
 - Creates two node groups (general and spot)
 - Creates example namespaces `monitoring` and `logging`

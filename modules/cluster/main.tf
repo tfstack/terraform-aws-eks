@@ -54,6 +54,42 @@ resource "aws_iam_role_policy_attachment" "cluster_policies" {
   policy_arn = each.value
 }
 
+# KMS permissions for cluster encryption
+# This policy is only created when kms_key_arn is provided (i.e., when encryption is enabled)
+resource "aws_iam_role_policy" "cluster_kms" {
+  count = local.enabled ? 1 : 0
+
+  name = "${var.cluster_name}-cluster-kms-policy"
+  role = aws_iam_role.cluster[0].id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "kms:DescribeKey",
+          "kms:CreateGrant",
+          "kms:ListGrants",
+          "kms:Decrypt",
+          "kms:Encrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey",
+          "kms:GenerateDataKeyWithoutPlaintext"
+        ]
+        Resource = var.kms_key_arn
+      }
+    ]
+  })
+
+  lifecycle {
+    precondition {
+      condition     = var.kms_key_arn != null
+      error_message = "kms_key_arn is required when creating cluster KMS policy"
+    }
+  }
+}
+
 resource "aws_security_group" "cluster" {
   count = local.enabled && var.create_security_group ? 1 : 0
 
